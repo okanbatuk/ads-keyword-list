@@ -20,7 +20,7 @@ export const fetchKeywords = async (
   startDate: string,
   endDate: string,
   page: number = 1,
-  limit: number = 10,
+  limit: number = 50,
   search?: string,
   sortField?: string,
   sortDirection?: string,
@@ -43,5 +43,10 @@ export const fetchKeywords = async (
   if (sortDirection) params.append("sortDirection", sortDirection);
 
   const res = await api.get(`/keyword/${adGroupId}?${params}`);
-  return res.data.data.map((c: any) => ({ ...c, id: Number(c.id) }));
+  const payload = res.data.data;
+
+  return {
+    ...payload,
+    keywords: payload.keywords.map((k: any) => ({ ...k, id: Number(k.id) })),
+  };
 };
