@@ -34,9 +34,6 @@ export const fetchKeywords = async (
   endDate: string,
   page: number = 1,
   limit: number = 50,
-  search?: string,
-  sortField?: string,
-  sortDirection?: string,
 ): Promise<{
   keywords: Keyword[];
   total: number;
@@ -49,11 +46,6 @@ export const fetchKeywords = async (
     page: page.toString(),
     limit: limit.toString(),
   });
-
-  if (search) params.append("search", search);
-  if (sortField) params.append("sortField", sortField);
-
-  if (sortDirection) params.append("sortDirection", sortDirection);
 
   const api = getApi();
   const res = await api.get(`/keyword/${adGroupId}?${params}`);

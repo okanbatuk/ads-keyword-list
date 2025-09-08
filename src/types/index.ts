@@ -22,10 +22,3 @@ export interface KeywordResponse {
   page: number;
   limit: number;
 }
-
-export type SortDirection = 'asc' | 'desc' | null;
-
-export interface SortConfig {
-  field: 'keyword' | 'avgQs' | null;
-  direction: SortDirection;
-}

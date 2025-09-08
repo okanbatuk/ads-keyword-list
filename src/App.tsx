@@ -72,8 +72,8 @@ function App() {
           <div className="lg:col-span-2">
             <KeywordTable
               selectedAdGroup={selectedAdGroup}
-              startDate={dateRange?.from || null}
-              endDate={dateRange?.to || null}
+              start={dateRange?.from || null}
+              end={dateRange?.to || null}
               disabled={!selectedAdGroup || !dateRange?.from || !dateRange?.to}
             />
           </div>
