@@ -72,7 +72,7 @@ Returns keywords for a specific ad group with optional query parameters.
 - `start` (required): Start date in YYYY-MM-DD format
 - `end` (required): End date in YYYY-MM-DD format
 - `page` (optional): Page number for pagination (default: 1)
-- `limit` (optional): Number of results per page (default: 10)
+- `limit` (optional): Number of results per page (default: 50)
 - `search` (optional): Search term to filter keywords
 - `sortField` (optional): Field to sort by ('keyword' or 'avgQs')
 - `sortDirection` (optional): Sort direction ('asc' or 'desc')
@@ -89,7 +89,7 @@ Returns keywords for a specific ad group with optional query parameters.
   ],
   "total": 100,
   "page": 1,
-  "limit": 10
+  "limit": 50
 }
 ```
 

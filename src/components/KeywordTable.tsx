@@ -26,7 +26,7 @@ export const KeywordTable: React.FC<KeywordTableProps> = ({
   });
 
   const debouncedSearch = useDebounce(search, 500);
-  const limit = 10;
+  const limit = 50;
 
   const { data, isLoading, error } = useQuery({
     queryKey: [
