@@ -55,13 +55,18 @@ export const KeywordTable: React.FC<KeywordTableProps> = ({
 
   const handleSort = (field: "keyword" | "avgQs") => {
     setSortConfig((prev) => {
+      let nextSort: SortConfig;
       if (prev.field === field) {
-        if (prev.direction === "asc") return { field, direction: "desc" };
-        if (prev.direction === "desc") return { field: null, direction: null };
+        if (prev.direction === "asc") nextSort = { field, direction: "desc" };
+        else if (prev.direction === "desc")
+          nextSort = { field: null, direction: null };
+        else nextSort = { field, direction: "asc" };
+      } else {
+        nextSort = { field, direction: "asc" };
       }
-      return { field, direction: "asc" };
+      setPage(1);
+      return nextSort;
     });
-    setPage(1);
   };
 
   const getSortIcon = (field: "keyword" | "avgQs") => {
