@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAdGroups } from "../utils/api";
 import { AdGroup, Campaign } from "../types";
+import { StatusBadge } from "./StatusBadge";
 
 interface AdGroupDropdownProps {
   selectedCampaign: Campaign | null;
@@ -86,6 +87,11 @@ export const AdGroupDropdown: React.FC<AdGroupDropdownProps> = ({
             </option>
           ))}
         </select>
+        {selectedAdGroup && (
+          <div className="absolute right-12 top-1/2 transform -translate-y-1/2">
+            <StatusBadge status={selectedAdGroup.status} />
+          </div>
+        )}
       </div>
     </div>
   );

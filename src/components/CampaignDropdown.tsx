@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCampaigns } from "../utils/api";
 import { Campaign, Account } from "../types";
+import { StatusBadge } from "./StatusBadge";
 
 interface CampaignDropdownProps {
   selectedAccount: Account | null;
@@ -87,6 +88,11 @@ export const CampaignDropdown: React.FC<CampaignDropdownProps> = ({
             </option>
           ))}
         </select>
+        {selectedCampaign && (
+          <div className="absolute right-12 top-1/2 transform -translate-y-1/2">
+            <StatusBadge status={selectedCampaign.status} />
+          </div>
+        )}
       </div>
     </div>
   );

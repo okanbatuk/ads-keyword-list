@@ -13,12 +13,14 @@ export interface Account {
 export interface Campaign {
   id: number;
   name: string;
+  status: string;
   accountId: string;
 }
 
 export interface AdGroup {
   id: number;
   name: string;
+  status: string;
   campaignId: string;
 }
 
