@@ -58,6 +58,10 @@ export const fetchKeywords = async (
 
   return {
     ...payload,
-    keywords: payload.keywords.map((k: any) => ({ ...k, id: Number(k.id) })),
+    keywords: payload.keywords.map((k: any) => ({
+      ...k,
+      id: Number(k.id),
+      avgQs: Number(k.avgQs),
+    })),
   };
 };
