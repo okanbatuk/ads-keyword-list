@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { subDays } from "date-fns";
-import { Campaign, AdGroup } from "./types";
+import { Account, Campaign, AdGroup } from "./types";
+import { AccountDropdown } from "./components/AccountDropdown";
 import { CampaignDropdown } from "./components/CampaignDropdown";
 import { AdGroupDropdown } from "./components/AdGroupDropdown";
 import { DateRangePicker } from "./components/DateRangePicker";
@@ -9,6 +10,7 @@ import { KeywordTable } from "./components/KeywordTable";
 import { DarkModeToggle } from "./components/DarkModeToggle";
 
 function App() {
+  const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
   const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(
     null,
   );
@@ -18,9 +20,15 @@ function App() {
     to: new Date(),
   });
 
+  const handleAccountChange = (account: Account | null) => {
+    setSelectedAccount(account);
+    setSelectedCampaign(null);
+    setSelectedAdGroup(null);
+  };
+
   const handleCampaignChange = (campaign: Campaign | null) => {
     setSelectedCampaign(campaign);
-    setSelectedAdGroup(null); // Reset ad group when campaign changes
+    setSelectedAdGroup(null);
   };
 
   const handleAdGroupChange = (adGroup: AdGroup | null) => {
@@ -48,7 +56,13 @@ function App() {
               </h2>
 
               <div className="space-y-4">
+                <AccountDropdown
+                  selectedAccount={selectedAccount}
+                  onAccountChange={handleAccountChange}
+                />
+
                 <CampaignDropdown
+                  selectedAccount={selectedAccount}
                   selectedCampaign={selectedCampaign}
                   onCampaignChange={handleCampaignChange}
                 />

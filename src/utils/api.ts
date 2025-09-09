@@ -1,10 +1,6 @@
 import axios, { AxiosInstance } from "axios";
-import { Campaign, AdGroup, Keyword } from "../types";
+import { Account, Campaign, AdGroup, Keyword } from "../types";
 
-// const api = axios.create({
-//   baseURL: import.meta.env.VITE_API_URL + "/api",
-// });
-//
 let instance: AxiosInstance | null = null;
 
 export const getApi = (): AxiosInstance => {
@@ -16,9 +12,18 @@ export const getApi = (): AxiosInstance => {
   return instance;
 };
 
-export const fetchCampaigns = async (): Promise<Campaign[]> => {
+export const fetchAccounts = async (): Promise<Account[]> => {
   const api = getApi();
-  const res = await api.get("/campaign");
+  const res = await api.get("/account");
+  return res.data.data.map((c: any) => ({ ...c, id: Number(c.id) }));
+};
+
+export const fetchCampaigns = async (
+  accountId?: number,
+): Promise<Campaign[]> => {
+  const api = getApi();
+  const url = accountId ? `/campaign/${accountId}` : "/campaign";
+  const res = await api.get(url);
   return res.data.data.map((c: any) => ({ ...c, id: Number(c.id) }));
 };
 
@@ -30,8 +35,8 @@ export const fetchAdGroups = async (campaignId: number): Promise<AdGroup[]> => {
 
 export const fetchKeywords = async (
   adGroupId: number,
-  startDate: string,
-  endDate: string,
+  start: string,
+  end: string,
   page: number = 1,
   limit: number = 50,
 ): Promise<{
@@ -41,8 +46,8 @@ export const fetchKeywords = async (
   limit: number;
 }> => {
   const params = new URLSearchParams({
-    start: startDate,
-    end: endDate,
+    start: start,
+    end: end,
     page: page.toString(),
     limit: limit.toString(),
   });

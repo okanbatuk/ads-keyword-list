@@ -1,13 +1,12 @@
-import React from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { fetchAdGroups } from '../utils/api'
-import { AdGroup, Campaign } from '../types'
-import { StatusBadge } from './StatusBadge'
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchAdGroups } from "../utils/api";
+import { AdGroup, Campaign } from "../types";
 
 interface AdGroupDropdownProps {
-  selectedCampaign: Campaign | null
-  selectedAdGroup: AdGroup | null
-  onAdGroupChange: (adGroup: AdGroup | null) => void
+  selectedCampaign: Campaign | null;
+  selectedAdGroup: AdGroup | null;
+  onAdGroupChange: (adGroup: AdGroup | null) => void;
 }
 
 export const AdGroupDropdown: React.FC<AdGroupDropdownProps> = ({
@@ -15,17 +14,21 @@ export const AdGroupDropdown: React.FC<AdGroupDropdownProps> = ({
   selectedAdGroup,
   onAdGroupChange,
 }) => {
-  const { data: adGroups, isLoading, error } = useQuery({
-    queryKey: ['adGroups', selectedCampaign?.id],
+  const {
+    data: adGroups,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["adGroups", selectedCampaign?.id],
     queryFn: () => fetchAdGroups(selectedCampaign!.id),
     enabled: !!selectedCampaign,
-  })
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const adGroupId = parseInt(e.target.value)
-    const adGroup = adGroups?.find(ag => ag.id === adGroupId) || null
-    onAdGroupChange(adGroup)
-  }
+    const adGroupId = e.target.value;
+    const adGroup = adGroups?.find((ag) => ag.id === Number(adGroupId)) || null;
+    onAdGroupChange(adGroup);
+  };
 
   if (!selectedCampaign) {
     return (
@@ -40,7 +43,7 @@ export const AdGroupDropdown: React.FC<AdGroupDropdownProps> = ({
           <option>Select a campaign first</option>
         </select>
       </div>
-    )
+    );
   }
 
   if (isLoading) {
@@ -51,7 +54,7 @@ export const AdGroupDropdown: React.FC<AdGroupDropdownProps> = ({
         </label>
         <div className="animate-pulse bg-gray-200 dark:bg-gray-700 h-10 rounded-md"></div>
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -62,7 +65,7 @@ export const AdGroupDropdown: React.FC<AdGroupDropdownProps> = ({
         </label>
         <div className="text-red-500 text-sm">Error loading ad groups</div>
       </div>
-    )
+    );
   }
 
   return (
@@ -72,7 +75,7 @@ export const AdGroupDropdown: React.FC<AdGroupDropdownProps> = ({
       </label>
       <div className="relative">
         <select
-          value={selectedAdGroup?.id || ''}
+          value={selectedAdGroup?.id || ""}
           onChange={handleChange}
           className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
         >
@@ -83,12 +86,7 @@ export const AdGroupDropdown: React.FC<AdGroupDropdownProps> = ({
             </option>
           ))}
         </select>
-        {selectedAdGroup && (
-          <div className="absolute right-12 top-1/2 transform -translate-y-1/2">
-            <StatusBadge status={selectedAdGroup.status} />
-          </div>
-        )}
       </div>
     </div>
-  )
-}
+  );
+};

@@ -1,27 +1,50 @@
-import React from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { fetchCampaigns } from '../utils/api'
-import { Campaign } from '../types'
-import { StatusBadge } from './StatusBadge'
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchCampaigns } from "../utils/api";
+import { Campaign, Account } from "../types";
 
 interface CampaignDropdownProps {
-  selectedCampaign: Campaign | null
-  onCampaignChange: (campaign: Campaign | null) => void
+  selectedAccount: Account | null;
+  selectedCampaign: Campaign | null;
+  onCampaignChange: (campaign: Campaign | null) => void;
 }
 
 export const CampaignDropdown: React.FC<CampaignDropdownProps> = ({
+  selectedAccount,
   selectedCampaign,
   onCampaignChange,
 }) => {
-  const { data: campaigns, isLoading, error } = useQuery({
-    queryKey: ['campaigns'],
-    queryFn: fetchCampaigns,
-  })
+  const {
+    data: campaigns,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["campaigns", selectedAccount?.id],
+    queryFn: () => fetchCampaigns(selectedAccount!.id),
+    enabled: !!selectedAccount,
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const campaignId = parseInt(e.target.value)
-    const campaign = campaigns?.find(c => c.id === campaignId) || null
-    onCampaignChange(campaign)
+    const campaignId = e.target.value;
+    const campaign =
+      campaigns?.find((c) => c.id === Number(campaignId)) || null;
+    onCampaignChange(campaign);
+  };
+
+  if (!selectedAccount) {
+    return (
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-gray-400 dark:text-gray-500">
+          Campaign
+        </label>
+        <select
+          disabled
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
+        >
+          <option>Select an account first</option>
+        </select>
+      </div>
+    );
   }
 
   if (isLoading) {
@@ -32,7 +55,7 @@ export const CampaignDropdown: React.FC<CampaignDropdownProps> = ({
         </label>
         <div className="animate-pulse bg-gray-200 dark:bg-gray-700 h-10 rounded-md"></div>
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -43,7 +66,7 @@ export const CampaignDropdown: React.FC<CampaignDropdownProps> = ({
         </label>
         <div className="text-red-500 text-sm">Error loading campaigns</div>
       </div>
-    )
+    );
   }
 
   return (
@@ -53,7 +76,7 @@ export const CampaignDropdown: React.FC<CampaignDropdownProps> = ({
       </label>
       <div className="relative">
         <select
-          value={selectedCampaign?.id || ''}
+          value={selectedCampaign?.id || ""}
           onChange={handleChange}
           className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
         >
@@ -64,12 +87,7 @@ export const CampaignDropdown: React.FC<CampaignDropdownProps> = ({
             </option>
           ))}
         </select>
-        {selectedCampaign && (
-          <div className="absolute right-12 top-1/2 transform -translate-y-1/2">
-            <StatusBadge status={selectedCampaign.status} />
-          </div>
-        )}
       </div>
     </div>
-  )
-}
+  );
+};

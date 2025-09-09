@@ -4,16 +4,22 @@ export interface Keyword {
   avgQs: number;
 }
 
-export interface Campaign {
+export interface Account {
   id: number;
   name: string;
   status: string;
 }
 
+export interface Campaign {
+  id: number;
+  name: string;
+  accountId: string;
+}
+
 export interface AdGroup {
   id: number;
   name: string;
-  status: string;
+  campaignId: string;
 }
 
 export interface KeywordResponse {
