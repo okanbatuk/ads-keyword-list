@@ -40,9 +40,34 @@ function App() {
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-            Keyword Analytics Dashboard
-          </h1>
+          <div className="flex items-center gap-1">
+            <svg
+              className="h-8 w-8 text-emerald-500 dark:text-emerald-400"
+              viewBox="0 0 50 50"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M9.037,40.763h4.286c0.552,0,1-0.447,1-1v-7.314c0-0.553-0.448-1-1-1H9.037c-0.552,0-1,0.447-1,1v7.314
+	C8.037,40.315,8.485,40.763,9.037,40.763z M10.037,33.448h2.286v5.314h-2.286V33.448z"
+              />
+              <path
+                d="M21.894,40.763c0.552,0,1-0.447,1-1v-20.64c0-0.553-0.448-1-1-1h-4.286c-0.552,0-1,0.447-1,1v20.64
+	c0,0.553,0.448,1,1,1H21.894z M18.608,20.123h2.286v18.64h-2.286V20.123z"
+              />
+              <path
+                d="M30.465,40.763c0.552,0,1-0.447,1-1V25.96c0-0.553-0.448-1-1-1H26.18c-0.552,0-1,0.447-1,1v13.803
+	c0,0.553,0.448,1,1,1H30.465z M27.18,26.96h2.286v11.803H27.18V26.96z"
+              />
+              <path
+                d="M33.751,9.763v30c0,0.553,0.448,1,1,1h4.286c0.552,0,1-0.447,1-1v-30c0-0.553-0.448-1-1-1h-4.286
+	C34.199,8.763,33.751,9.21,33.751,9.763z M35.751,10.763h2.286v28h-2.286V10.763z"
+              />
+            </svg>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+              Keyword Analytics
+            </h1>
+          </div>
           <DarkModeToggle />
         </div>
 
